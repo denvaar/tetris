@@ -1,0 +1,38 @@
+111111111
+100010001
+100010001
+100010001
+101111101
+100010001
+100010001
+100000001
+111111111
+
+█████████
+█   █   █
+█   █   █
+█   █   █
+█ █████ █
+█   █   █
+█   █   █
+█       █
+█████████
+
+[1, 2, 3, 4]
+
+[a b     [c a
+ c d]     d b]
+
+[1 2 3 4
+ 5 6 7 8
+ 9 0 a b
+ c d e f]
+
+ for row in rows, r
+   for col in cols, c
+     temp = matrix[r][lastColIndex]
+     matrix[r][c] = matrix[r]
+
+TODO
+ o Matrix rotation
+ o Detect collision

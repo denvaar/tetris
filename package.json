@@ -1,0 +1,21 @@
+{
+  "name": "tetris",
+  "version": "1.0.0",
+  "main": "dist/app.js",
+  "author": "Denver Smith",
+  "license": "MIT",
+  "scripts": {
+    "dev": "tsc --watch",
+    "test": "NODE_ENV=testing jest"
+  },
+  "devDependencies": {
+    "@babel/plugin-transform-modules-commonjs": "^7.6.0",
+    "@babel/preset-typescript": "^7.6.0",
+    "@types/jest": "^24.0.18",
+    "@types/node": "^12.7.12",
+    "babel-preset-env": "^1.7.0",
+    "jest": "^24.9.0",
+    "ts-jest": "^24.1.0",
+    "typescript": "^3.6.4"
+  }
+}
