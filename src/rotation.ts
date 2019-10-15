@@ -1,4 +1,4 @@
-const rotate = (m: Array<string>): Array<string> => {
+function rotate<T>(m: T[]): T[] {
   const size = Math.sqrt(m.length);
 
   for (let x = 0; x <= Math.floor(size / 2) - 1; x++) {
@@ -25,6 +25,6 @@ const rotate = (m: Array<string>): Array<string> => {
   }
 
   return m;
-};
+}
 
 export default rotate;
