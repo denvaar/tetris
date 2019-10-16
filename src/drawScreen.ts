@@ -1,11 +1,11 @@
 const EMPTY_CELL = ' ';
-const GUIDE_CELL = '·'; // ░
+const GUIDE_CELL = '░';
 const FULL_CELL = '█';
 const TOP_ROW = 2;
-const WIDTH = 12;
+const WIDTH = 13;
 const HEIGHT = 25;
 
-const drawScreen = (state: GameState): null | ScreenData => {
+const drawScreen = (state: GameState): void => {
   let screen = '';
   screen += drawBoard();
 
@@ -13,8 +13,6 @@ const drawScreen = (state: GameState): null | ScreenData => {
   screen += drawPiece(activePiece, activePieceX, activePieceY);
 
   writeScreen(screen);
-
-  return null;
 };
 
 const drawBoard = (): string => {
@@ -55,6 +53,10 @@ const drawPiece = (piece: Tetrominoe, column: number, row: number): string => {
     if (piece[i] === 1) {
       screen += moveCursorTo(cursorRow, cursorColumn);
       screen += FULL_CELL;
+    } else {
+      // TODO: remove after debugging
+      screen += moveCursorTo(cursorRow, cursorColumn);
+      screen += GUIDE_CELL;
     }
     cursorColumn++;
   }
