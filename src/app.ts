@@ -7,6 +7,7 @@ if (process.stdin.setRawMode) {
 import tetrominoes from './tetrominoes';
 import drawScreen from './drawScreen';
 import rotate from './rotation';
+import update from './update';
 
 const tetris = (): void => {
   // save cursor
@@ -15,33 +16,20 @@ const tetris = (): void => {
   let lastPressed = '';
   const initialState: GameState = {
     prevScreenData: null,
-    activePiece: tetrominoes[0],
+    activePiece: tetrominoes[3],
     activePieceX: 3,
     activePieceY: 3,
   };
 
   const gameLoop = (state: GameState): void => {
     setTimeout(() => {
-      const nextState = {...state};
+      let nextState = {...state};
       // draw game state
-      nextState.prevScreenData = drawScreen(state);
+      drawScreen(nextState);
       // update game state
-      if (lastPressed === 'r') {
-        nextState.activePiece = rotate(state.activePiece);
+      nextState = update(nextState, lastPressed, () => {
         lastPressed = '';
-      }
-      if (lastPressed === 'l') {
-        nextState.activePieceX += 1;
-        lastPressed = '';
-      }
-      if (lastPressed === 'h') {
-        nextState.activePieceX -= 1;
-        lastPressed = '';
-      }
-      if (lastPressed === 'j') {
-        nextState.activePieceY += 1;
-        lastPressed = '';
-      }
+      });
       gameLoop(nextState);
     }, 30);
   };

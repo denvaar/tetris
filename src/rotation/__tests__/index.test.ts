@@ -1,4 +1,4 @@
-import rotate from './rotation';
+import rotate from '../index';
 
 test('rotates 2x2 matrix', () => {
   // prettier-ignore
