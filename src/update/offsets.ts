@@ -1,4 +1,4 @@
-export const offsetPieceLeft = (piece: Tetrominoe): number => {
+export const offsetPieceLeft = (piece: number[]): number => {
   const root = Math.sqrt(piece.length);
   for (let col = 0; col < root; col++) {
     for (let row = 0; row <= piece.length - root; row += root) {
@@ -9,7 +9,7 @@ export const offsetPieceLeft = (piece: Tetrominoe): number => {
   return 0;
 };
 
-export const offsetPieceRight = (piece: Tetrominoe): number => {
+export const offsetPieceRight = (piece: number[]): number => {
   const root = Math.sqrt(piece.length);
   for (let col = root - 1; col >= 0; col--) {
     for (let row = piece.length - root; row >= 0; row -= root) {
@@ -20,7 +20,7 @@ export const offsetPieceRight = (piece: Tetrominoe): number => {
   return 0;
 };
 
-export const offsetPieceBottom = (piece: Tetrominoe): number => {
+export const offsetPieceBottom = (piece: number[]): number => {
   const root = Math.sqrt(piece.length);
 
   for (let row = root - 1; row >= 0; row--) {

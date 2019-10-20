@@ -1,40 +1,66 @@
+import colors from './utils/colors';
+
 const EMPTY_CELL = ' ';
 const GUIDE_CELL = '░';
 const FULL_CELL = '█';
 const TOP_ROW = 2;
 const WIDTH = 13;
 const HEIGHT = 25;
+const columnOffset = 3;
+const rowOffset = 1;
 
 const drawScreen = (state: GameState): void => {
   let screen = '';
   screen += drawBoard();
 
-  const {activePiece, activePieceX, activePieceY} = state;
-  screen += drawPiece(activePiece, activePieceX, activePieceY);
+  const {block, columns} = state;
+  const blockColumn = state.blockColumn + columnOffset;
+  const blockRow = state.blockRow + rowOffset;
+
+  screen += drawPiece(block, blockColumn, blockRow);
+  screen += drawLandedPieces(columns);
 
   writeScreen(screen);
 };
 
+const drawLandedPieces = (pieces: Array<Array<number>>): string => {
+  let screen = '';
+
+  for (let row = 0; row < pieces[0].length; row++) {
+    for (let col = 0; col < 10; col++) {
+      const cellValue = pieces[col][row];
+      if (cellValue === 1) {
+        screen += moveCursorTo(row + 2, col + 3);
+        screen += FULL_CELL;
+      }
+    }
+  }
+
+  return screen;
+};
+
 const drawBoard = (): string => {
   let screen = moveCursorTo(TOP_ROW, TOP_ROW);
+  screen += colors.lightGray;
   for (let row = TOP_ROW; row <= HEIGHT; row++) {
     for (let col = TOP_ROW; col <= WIDTH; col++) {
       screen += moveCursorTo(row, col);
       if (col === WIDTH || col === TOP_ROW) {
         if (col === TOP_ROW && row === HEIGHT) {
-          screen += '└';
+          screen += FULL_CELL;
         } else if (row === HEIGHT) {
-          screen += '┘';
+          screen += FULL_CELL;
         } else {
-          screen += '│';
+          screen += FULL_CELL;
         }
       } else if (row === HEIGHT) {
-        screen += '─';
+        screen += FULL_CELL;
       } else {
         screen += EMPTY_CELL;
       }
     }
   }
+  screen += colors.reset;
   return screen;
 };
 
@@ -42,26 +68,25 @@ const drawPiece = (piece: Tetrominoe, column: number, row: number): string => {
   let screen = '';
   let cursorRow = row;
   let cursorColumn = column;
-  const size = Math.sqrt(piece.length);
+  const size = Math.sqrt(piece.layout.length);
 
-  for (let i = 0; i < piece.length; i++) {
+  screen += piece.color;
+
+  for (let i = 0; i < piece.layout.length; i++) {
     if (i % size === 0) {
       cursorRow++;
       cursorColumn = column;
     }
 
-    if (piece[i] === 1) {
+    if (piece.layout[i] === 1) {
       screen += moveCursorTo(cursorRow, cursorColumn);
       screen += FULL_CELL;
-    } else {
-      // TODO: remove after debugging
-      screen += moveCursorTo(cursorRow, cursorColumn);
-      screen += GUIDE_CELL;
     }
     cursorColumn++;
   }
 
-  console.log(screen);
+  screen += colors.reset;
+
   return screen;
 };
 

@@ -1,4 +1,7 @@
-type Tetrominoe = number[];
+interface Tetrominoe {
+  color: string;
+  layout: number[];
+}
 
 type ScreenData = {
   [key: string]: string;
@@ -6,7 +9,8 @@ type ScreenData = {
 
 interface GameState {
   prevScreenData: null | ScreenData;
-  activePiece: Tetrominoe;
-  activePieceX: number;
-  activePieceY: number;
+  block: Tetrominoe;
+  blockColumn: number;
+  blockRow: number;
+  columns: Array<Array<number>>;
 }
