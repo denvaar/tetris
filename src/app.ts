@@ -1,24 +1,29 @@
+import drawScreen from './drawScreen';
+import rotate from './rotation';
+import tetrominoes from './tetrominoes';
+import update from './update';
+
 const readline = require('readline');
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.setRawMode) {
   process.stdin.setRawMode(true);
 }
 
-import tetrominoes from './tetrominoes';
-import drawScreen from './drawScreen';
-import rotate from './rotation';
-import update from './update';
-
 const tetris = (): void => {
   // save cursor
   process.stdout.write('\x1b[s');
 
   let lastPressed = '';
+  const columns: Array<Array<number>> = new Array(10)
+    .fill(undefined)
+    .map(() => new Array(24).fill(0));
+
   const initialState: GameState = {
     prevScreenData: null,
-    activePiece: tetrominoes[3],
-    activePieceX: 3,
-    activePieceY: 3,
+    block: tetrominoes[2],
+    blockColumn: 0,
+    blockRow: 0,
+    columns,
   };
 
   const gameLoop = (state: GameState): void => {
