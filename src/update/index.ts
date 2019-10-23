@@ -1,5 +1,6 @@
 import checkCollision from './collision';
 import rotate from '../rotation';
+import shiftRows from './shiftRows';
 import tetrominoes from '../tetrominoes';
 import {getRandomInt, iterateColumns} from '../utils';
 import {offsetPieceBottom, offsetPieceLeft, offsetPieceRight} from './offsets';
@@ -63,6 +64,7 @@ const update = (
       state.blockRow,
       state.columns,
     );
+    state.columns = shiftRows(state.columns);
     state.block = tetrominoes[getRandomInt(0, 6)];
     state.blockRow = 0;
     state.blockColumn = 0;
