@@ -1,4 +1,7 @@
-import checkCollision from './collision';
+import checkCollision, {
+  checkCollisionRight,
+  checkCollisionLeft,
+} from './collision';
 import rotate from '../rotation';
 import shiftRows from './shiftRows';
 import tetrominoes from '../tetrominoes';
@@ -25,31 +28,45 @@ const freezeBlock = (
   return columns;
 };
 
+const minColumn = 0;
+const maxColumn = 9;
+const maxRow = 22;
+
 const update = (
   state: GameState,
   lastPressed: string,
   clearLastPressed: () => void,
 ): GameState => {
-  const minColumn = 0;
-  const maxColumn = 9;
-  const maxRow = 22;
   const {blockColumn, blockRow} = state;
 
+  /* rotate */
   if (lastPressed === 'r') {
     state.block = {...state.block, layout: rotate(state.block.layout)};
   }
+
+  /* move right */
   if (lastPressed === 'l') {
     const xOffset = offsetPieceRight(state.block.layout);
-    if (blockColumn < maxColumn - xOffset) {
+    if (
+      blockColumn < maxColumn - xOffset &&
+      !checkCollisionRight(blockColumn, blockRow, state.columns, state.block)
+    ) {
       state.blockColumn += 1;
     }
   }
+
+  /* move left */
   if (lastPressed === 'h') {
     const xOffset = offsetPieceLeft(state.block.layout);
-    if (blockColumn > minColumn - xOffset) {
+    if (
+      blockColumn > minColumn - xOffset &&
+      !checkCollisionLeft(blockColumn, blockRow, state.columns, state.block)
+    ) {
       state.blockColumn -= 1;
     }
   }
+
+  /* move down */
   if (lastPressed === 'j') {
     const yOffset = offsetPieceBottom(state.block.layout);
     if (blockRow + yOffset < maxRow) {
@@ -57,13 +74,21 @@ const update = (
     }
   }
 
-  if (checkCollision(state)) {
+  if (
+    checkCollision(
+      state.blockColumn,
+      state.blockRow,
+      state.columns,
+      state.block,
+    )
+  ) {
     state.columns = freezeBlock(
       state.block,
       state.blockColumn,
       state.blockRow,
       state.columns,
     );
+
     state.columns = shiftRows(state.columns);
     state.block = tetrominoes[getRandomInt(0, 6)];
     state.blockRow = 0;
