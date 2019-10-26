@@ -26,7 +26,7 @@ describe('update', () => {
       block,
       blockColumn: 0,
       blockRow: 0,
-      columns: [],
+      columns: [[], [], [], [], [], [], [], [], [], []],
       level: 1,
     };
     const lastPressed = 'r';
