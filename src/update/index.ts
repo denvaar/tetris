@@ -8,6 +8,8 @@ import tetrominoes from '../tetrominoes';
 import {getRandomInt, iterateColumns} from '../utils';
 import {offsetPieceBottom, offsetPieceLeft, offsetPieceRight} from './offsets';
 
+import logger from '../utils/logger';
+
 const freezeBlock = (
   block: Tetrominoe,
   blockColumn: number,
@@ -41,7 +43,28 @@ const update = (
 
   /* rotate */
   if (lastPressed === 'r') {
-    state.block = {...state.block, layout: rotate(state.block.layout)};
+    const rotatedBlock = {
+      ...state.block,
+      layout: rotate([...state.block.layout]),
+    };
+    const xOffset = offsetPieceRight(rotatedBlock.layout);
+    if (
+      blockColumn + xOffset <= maxColumn &&
+      !checkCollisionRight(
+        blockColumn,
+        blockRow,
+        state.columns,
+        rotatedBlock,
+        0,
+      ) &&
+      !checkCollision(blockColumn, blockRow, state.columns, rotatedBlock, 0) &&
+      !checkCollisionLeft(blockColumn, blockRow, state.columns, rotatedBlock, 0)
+    ) {
+      state.block = rotatedBlock;
+    } else {
+      clearLastPressed();
+      return state;
+    }
   }
 
   /* move right */
