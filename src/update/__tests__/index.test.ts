@@ -26,7 +26,14 @@ describe('update', () => {
       block,
       blockColumn: 0,
       blockRow: 0,
-      columns: [[], [], [], [], [], [], [], [], [], []],
+      // prettier-ignore
+      columns: [
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0],
+        [0, 0, 0, 0, 0]],
       level: 1,
     };
     const lastPressed = 'r';

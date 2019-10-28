@@ -6,9 +6,7 @@ import rotate from '../rotation';
 import shiftRows from './shiftRows';
 import tetrominoes from '../tetrominoes';
 import {getRandomInt, iterateColumns} from '../utils';
-import {offsetPieceBottom, offsetPieceLeft, offsetPieceRight} from './offsets';
-
-import logger from '../utils/logger';
+import wallKick from './wallKick';
 
 const freezeBlock = (
   block: Tetrominoe,
@@ -47,21 +45,32 @@ const update = (
       ...state.block,
       layout: rotate([...state.block.layout]),
     };
-    const xOffset = offsetPieceRight(rotatedBlock.layout);
     if (
-      blockColumn + xOffset <= maxColumn &&
+      !checkCollision(blockColumn, blockRow, state.columns, rotatedBlock) &&
       !checkCollisionRight(
         blockColumn,
         blockRow,
         state.columns,
         rotatedBlock,
-        0,
       ) &&
-      !checkCollision(blockColumn, blockRow, state.columns, rotatedBlock, 0) &&
-      !checkCollisionLeft(blockColumn, blockRow, state.columns, rotatedBlock, 0)
+      !checkCollisionLeft(blockColumn, blockRow, state.columns, rotatedBlock)
     ) {
       state.block = rotatedBlock;
     } else {
+      const [wallKickColumn, wallKickRow] = wallKick(
+        blockColumn,
+        blockRow,
+        state.columns,
+        rotatedBlock,
+        maxColumn,
+      );
+
+      if (wallKickColumn !== 0) {
+        state.block = rotatedBlock;
+        state.blockColumn = state.blockColumn + wallKickColumn;
+        state.blockRow = state.blockRow - wallKickRow;
+      }
+
       clearLastPressed();
       return state;
     }
@@ -69,10 +78,13 @@ const update = (
 
   /* move right */
   if (lastPressed === 'l') {
-    const xOffset = offsetPieceRight(state.block.layout);
     if (
-      blockColumn < maxColumn - xOffset &&
-      !checkCollisionRight(blockColumn, blockRow, state.columns, state.block)
+      !checkCollisionRight(
+        blockColumn + 1,
+        blockRow,
+        state.columns,
+        state.block,
+      )
     ) {
       state.blockColumn += 1;
     }
@@ -80,10 +92,8 @@ const update = (
 
   /* move left */
   if (lastPressed === 'h') {
-    const xOffset = offsetPieceLeft(state.block.layout);
     if (
-      blockColumn > minColumn - xOffset &&
-      !checkCollisionLeft(blockColumn, blockRow, state.columns, state.block)
+      !checkCollisionLeft(blockColumn - 1, blockRow, state.columns, state.block)
     ) {
       state.blockColumn -= 1;
     }
@@ -91,8 +101,9 @@ const update = (
 
   /* move down */
   if (lastPressed === 'j') {
-    const yOffset = offsetPieceBottom(state.block.layout);
-    if (blockRow + yOffset < maxRow) {
+    if (
+      !checkCollision(blockColumn, blockRow + 1, state.columns, state.block)
+    ) {
       state.blockRow += 1;
     }
   }
@@ -100,7 +111,7 @@ const update = (
   if (
     checkCollision(
       state.blockColumn,
-      state.blockRow,
+      state.blockRow + 1,
       state.columns,
       state.block,
     )
