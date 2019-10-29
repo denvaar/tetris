@@ -1,4 +1,5 @@
 import colors from './utils/colors';
+import checkCollision from './update/collision';
 
 const EMPTY_CELL = ' ';
 const GUIDE_CELL = '░';
@@ -17,7 +18,15 @@ const drawScreen = (state: GameState): void => {
   const blockColumn = state.blockColumn + columnOffset;
   const blockRow = state.blockRow + rowOffset;
 
-  screen += drawPiece(block, blockColumn, blockRow);
+  // draw ghost piece
+  let ghostPieceRow = blockRow;
+  // TODO: not very efficient to loop like this
+  while (!checkCollision(state.blockColumn, ghostPieceRow, columns, block)) {
+    ghostPieceRow++;
+  }
+  screen += drawPiece(block, blockColumn, ghostPieceRow, colors.darkGray);
+
+  screen += drawPiece(block, blockColumn, blockRow, block.color);
   screen += drawLandedPieces(columns);
 
   writeScreen(screen);
@@ -64,13 +73,18 @@ const drawBoard = (): string => {
   return screen;
 };
 
-const drawPiece = (piece: Tetrominoe, column: number, row: number): string => {
+const drawPiece = (
+  piece: Tetrominoe,
+  column: number,
+  row: number,
+  color: string,
+): string => {
   let screen = '';
   let cursorRow = row;
   let cursorColumn = column;
   const size = Math.sqrt(piece.layout.length);
 
-  screen += piece.color;
+  screen += color;
 
   for (let i = 0; i < piece.layout.length; i++) {
     if (i % size === 0) {
