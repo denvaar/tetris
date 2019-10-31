@@ -39,6 +39,15 @@ const update = (
 ): GameState => {
   const {blockColumn, blockRow} = state;
 
+  /* fast drop */
+  if (lastPressed === 'space') {
+    let row = blockRow;
+    while (!checkCollision(blockColumn, row + 1, state.columns, state.block)) {
+      row++;
+    }
+    state.blockRow = row;
+  }
+
   /* rotate */
   if (lastPressed === 'r') {
     const rotatedBlock = {

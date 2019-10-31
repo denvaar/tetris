@@ -67,7 +67,7 @@ const tetris = (): void => {
   process.stdin.on('keypress', (str, {ctrl, name}) => {
     if (ctrl && name === 'c') process.exit();
 
-    const acceptableKeys = ['r', 'l', 'h', 'j'];
+    const acceptableKeys = ['r', 'l', 'h', 'j', 'space'];
     if (acceptableKeys.includes(name)) {
       lastPressed = name;
     }
