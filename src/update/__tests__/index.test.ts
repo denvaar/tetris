@@ -22,6 +22,9 @@ describe('update', () => {
       ]
     };
     const state: GameState = {
+      downPressCount: 0,
+      pendingFreezeTTL: 0,
+      pendingFreeze: false,
       prevScreenData: null,
       block,
       blockColumn: 0,
