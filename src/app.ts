@@ -20,12 +20,15 @@ const tetris = (): void => {
     .map(() => new Array(24).fill(0));
 
   const initialState: GameState = {
-    prevScreenData: null,
     block: tetrominoes[2],
     blockColumn: 0,
     blockRow: 0,
-    level: 1,
     columns,
+    downPressCount: 0,
+    level: 1,
+    pendingFreeze: false,
+    pendingFreezeTTL: 0,
+    prevScreenData: null,
   };
 
   const hrtimeMs = function() {
@@ -53,7 +56,13 @@ const tetris = (): void => {
 
     if (timeElapsed >= 1 - state.level * 0.1) {
       timeElapsed = 0;
-      nextState.blockRow++;
+      if (!nextState.pendingFreeze) {
+        nextState.blockRow++;
+      }
+
+      if (nextState.pendingFreeze && nextState.pendingFreezeTTL > 0) {
+        nextState.pendingFreezeTTL--;
+      }
     }
     timeElapsed += delta;
     // update game state

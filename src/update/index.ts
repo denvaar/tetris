@@ -1,36 +1,15 @@
 import checkCollision, {
-  checkCollisionRight,
   checkCollisionLeft,
+  checkCollisionRight,
 } from './collision';
+import freezeBlock from './freezeBlock';
 import rotate from '../rotation';
-import shiftRows from './shiftRows';
-import tetrominoes from '../tetrominoes';
-import {getRandomInt, iterateColumns} from '../utils';
 import wallKick from './wallKick';
+import getNextBlock from './getNextBlock';
 
-const freezeBlock = (
-  block: Tetrominoe,
-  blockColumn: number,
-  blockRow: number,
-  columns: number[][],
-): number[][] => {
-  const size = Math.sqrt(block.layout.length);
-
-  iterateColumns(size, (columnOffset, rowOffset) => {
-    if (block.layout[size * rowOffset + columnOffset] === 1) {
-      const adjustedColumn = blockColumn + columnOffset;
-      const adjustedRow = blockRow + rowOffset;
-
-      columns[adjustedColumn][adjustedRow] = 1;
-    }
-  });
-
-  return columns;
-};
-
-const minColumn = 0;
 const maxColumn = 9;
 const maxRow = 22;
+const minColumn = 0;
 
 const update = (
   state: GameState,
@@ -46,6 +25,7 @@ const update = (
       row++;
     }
     state.blockRow = row;
+    state.downPressCount = 2;
   }
 
   /* rotate */
@@ -108,34 +88,62 @@ const update = (
     }
   }
 
+  const isColliding = checkCollision(
+    state.blockColumn,
+    state.blockRow + 1,
+    state.columns,
+    state.block,
+  );
+
   /* move down */
-  if (lastPressed === 'j') {
-    if (
-      !checkCollision(blockColumn, blockRow + 1, state.columns, state.block)
-    ) {
+  if (lastPressed === 'j' && !state.pendingFreeze) {
+    if (!isColliding) {
       state.blockRow += 1;
     }
   }
 
-  if (
-    checkCollision(
-      state.blockColumn,
-      state.blockRow + 1,
-      state.columns,
-      state.block,
-    )
-  ) {
-    state.columns = freezeBlock(
-      state.block,
-      state.blockColumn,
-      state.blockRow,
-      state.columns,
-    );
+  if (lastPressed === 'j' && state.pendingFreeze) {
+    if (isColliding) {
+      state.downPressCount++;
+    }
+  }
 
-    state.columns = shiftRows(state.columns);
-    state.block = tetrominoes[getRandomInt(0, 6)];
-    state.blockRow = 0;
-    state.blockColumn = 0;
+  if (isColliding) {
+    if (state.downPressCount === 2) {
+      state.columns = freezeBlock(
+        state.block,
+        state.blockColumn,
+        state.blockRow,
+        state.columns,
+      );
+
+      state = getNextBlock(state);
+      state.downPressCount = 0;
+      clearLastPressed();
+
+      return state;
+    }
+
+    if (state.pendingFreeze) {
+      if (state.pendingFreezeTTL <= 0) {
+        state.columns = freezeBlock(
+          state.block,
+          state.blockColumn,
+          state.blockRow,
+          state.columns,
+        );
+
+        state = getNextBlock(state);
+      }
+    } else {
+      state.pendingFreeze = true;
+      state.pendingFreezeTTL = 2;
+    }
+  } else {
+    if (state.pendingFreeze) {
+      state.pendingFreeze = false;
+      state.pendingFreezeTTL = 0;
+    }
   }
 
   clearLastPressed();
