@@ -2,7 +2,6 @@ import drawScreen from './drawScreen';
 import rotate from './rotation';
 import tetrominoes from './tetrominoes';
 import update from './update';
-import logger from './utils/logger';
 
 const readline = require('readline');
 readline.emitKeypressEvents(process.stdin);
@@ -15,9 +14,9 @@ const tetris = (): void => {
   process.stdout.write('\x1b[s');
 
   let lastPressed = '';
-  const columns: Array<Array<number>> = new Array(10)
+  const columns: FrozenTetrominoe[][] = new Array(10)
     .fill(undefined)
-    .map(() => new Array(24).fill(0));
+    .map(() => new Array(24).fill({value: 0, color: null}));
 
   const initialState: GameState = {
     block: tetrominoes[2],

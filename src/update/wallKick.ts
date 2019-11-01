@@ -9,7 +9,7 @@ const maxColumnDelta = 2;
 const wallKick = (
   blockColumn: number,
   blockRow: number,
-  columns: number[][],
+  columns: FrozenTetrominoe[][],
   block: Tetrominoe,
   maxColumn: number,
 ): number[] => {

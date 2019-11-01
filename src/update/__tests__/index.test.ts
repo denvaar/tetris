@@ -1,5 +1,6 @@
 import update from '../index';
 import * as rotate from '../../rotation';
+import {makeColumns} from '../../utils/testHelpers';
 
 describe('update', () => {
   test('activePiece is rotated when lastPressed is "r"', () => {
@@ -30,21 +31,19 @@ describe('update', () => {
       blockColumn: 0,
       blockRow: 0,
       // prettier-ignore
-      columns: [
+      columns: makeColumns([
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
         [0, 0, 0, 0, 0],
-        [0, 0, 0, 0, 0]],
+        [0, 0, 0, 0, 0]]),
       level: 1,
     };
     const lastPressed = 'r';
-
     const rotateSpy = jest
       .spyOn(rotate, 'default')
       .mockImplementation(() => rotatedBlock.layout);
-
     const nextState: GameState = update(state, lastPressed, () => {});
     expect(nextState.block).toEqual(rotatedBlock);
     expect(rotateSpy).toHaveBeenCalledWith(block.layout);

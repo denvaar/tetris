@@ -1,4 +1,4 @@
-const findCompleteRows = (columns: number[][]): number[] => {
+const findCompleteRows = (columns: FrozenTetrominoe[][]): number[] => {
   let completeRows: number[] = [];
   const columnLength = columns.length; // should be 10
 
@@ -6,7 +6,7 @@ const findCompleteRows = (columns: number[][]): number[] => {
     let rowValues = [];
 
     for (let cIndex = 0; cIndex < columnLength; cIndex++) {
-      rowValues.push(columns[cIndex][rIndex]);
+      rowValues.push(columns[cIndex][rIndex].value);
     }
 
     if (rowValues.every(val => val === 1)) {
