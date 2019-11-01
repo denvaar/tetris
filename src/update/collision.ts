@@ -3,7 +3,7 @@ import {iterateColumns} from '../utils';
 const checkCollision = (
   blockColumn: number,
   blockRow: number,
-  columns: number[][],
+  columns: FrozenTetrominoe[][],
   block: Tetrominoe,
 ): boolean => {
   const size = Math.sqrt(block.layout.length);
@@ -27,7 +27,7 @@ const checkCollision = (
       column >= columns.length ||
       column < 0 ||
       row >= columns[0].length - 1 ||
-      columns[column][row] === 1
+      columns[column][row].value === 1
     );
   });
 };
@@ -35,7 +35,7 @@ const checkCollision = (
 export const checkCollisionRight = (
   blockColumn: number,
   blockRow: number,
-  columns: number[][],
+  columns: FrozenTetrominoe[][],
   block: Tetrominoe,
 ): boolean => {
   const size = Math.sqrt(block.layout.length);
@@ -55,14 +55,16 @@ export const checkCollisionRight = (
   return Object.keys(maxPosition).some(r => {
     const row = Number(r);
     const column = maxPosition[r];
-    return column < 0 || column >= columns.length || columns[column][row] === 1;
+    return (
+      column < 0 || column >= columns.length || columns[column][row].value === 1
+    );
   });
 };
 
 export const checkCollisionLeft = (
   blockColumn: number,
   blockRow: number,
-  columns: number[][],
+  columns: FrozenTetrominoe[][],
   block: Tetrominoe,
 ): boolean => {
   const size = Math.sqrt(block.layout.length);
@@ -82,7 +84,9 @@ export const checkCollisionLeft = (
   return Object.keys(minPosition).some(r => {
     const row = Number(r);
     const column = minPosition[r];
-    return column >= columns.length || column < 0 || columns[column][row] === 1;
+    return (
+      column >= columns.length || column < 0 || columns[column][row].value === 1
+    );
   });
 };
 

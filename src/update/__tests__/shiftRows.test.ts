@@ -1,25 +1,26 @@
 import * as findCompleteRows from '../findCompleteRows';
 import shiftRows from '../shiftRows';
+import {makeColumns} from '../../utils/testHelpers';
 
 const findCompleteRowsSpy = jest.spyOn(findCompleteRows, 'default');
 
 describe('shiftRows', () => {
   test('single completed row', () => {
     // prettier-ignore
-    const columns = [
+    const columns = makeColumns([
       [0, 1, 0, 0],
       [1, 1, 1, 1],
       [0, 1, 0, 1],
       [0, 1, 0, 1],
-    ];
+    ]);
 
     // prettier-ignore
-    const expected = [
+    const expected = makeColumns([
       [0, 0, 0, 0],
       [0, 1, 1, 1],
       [0, 0, 0, 1],
       [0, 0, 0, 1],
-    ];
+    ]);
 
     findCompleteRowsSpy.mockImplementation(() => [1]);
 
@@ -29,20 +30,20 @@ describe('shiftRows', () => {
 
   test('several completed row', () => {
     // prettier-ignore
-    const columns = [
+    const columns = makeColumns([
       [0, 1, 1, 1],
       [1, 1, 1, 1],
       [0, 1, 1, 1],
       [0, 1, 1, 1],
-    ];
+    ]);
 
     // prettier-ignore
-    const expected = [
+    const expected = makeColumns([
       [0, 0, 0, 0],
       [0, 0, 0, 1],
       [0, 0, 0, 0],
       [0, 0, 0, 0],
-    ];
+    ]);
 
     findCompleteRowsSpy.mockImplementation(() => [1, 2, 3]);
 
@@ -52,20 +53,20 @@ describe('shiftRows', () => {
 
   test('no completed row', () => {
     // prettier-ignore
-    const columns = [
+    const columns = makeColumns([
       [0, 0, 1, 0],
       [1, 1, 0, 1],
       [0, 1, 1, 1],
       [0, 1, 1, 0],
-    ];
+    ]);
 
     // prettier-ignore
-    const expected = [
+    const expected = makeColumns([
       [0, 0, 1, 0],
       [1, 1, 0, 1],
       [0, 1, 1, 1],
       [0, 1, 1, 0],
-    ];
+    ]);
 
     findCompleteRowsSpy.mockImplementation(() => []);
 

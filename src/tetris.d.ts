@@ -3,6 +3,11 @@ interface Tetrominoe {
   layout: number[];
 }
 
+interface FrozenTetrominoe {
+  color: string | null;
+  value: number;
+}
+
 type ScreenData = {
   [key: string]: string;
 };
@@ -14,7 +19,7 @@ interface GameState {
   block: Tetrominoe; // Object representing the falling block
   blockColumn: number; // Column of the falling block
   blockRow: number; // Row of the falling block
-  columns: Array<Array<number>>; // 2d array of 1s and 0s representing frozen blocks
+  columns: FrozenTetrominoe[][]; // 2d array of 1s and 0s representing frozen blocks
   level: Level; // Self explanitory
   pendingFreezeTTL: number; // Amount of time before a block will freeze
   pendingFreeze: boolean; // true for a moment when a block collides

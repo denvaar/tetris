@@ -32,15 +32,20 @@ const drawScreen = (state: GameState): void => {
   writeScreen(screen);
 };
 
-const drawLandedPieces = (pieces: Array<Array<number>>): string => {
+const drawLandedPieces = (pieces: FrozenTetrominoe[][]): string => {
   let screen = '';
 
   for (let row = 0; row < pieces[0].length; row++) {
     for (let col = 0; col < 10; col++) {
-      const cellValue = pieces[col][row];
+      const cellValue = pieces[col][row].value;
+      const cellColor = pieces[col][row].color;
+
       if (cellValue === 1) {
         screen += moveCursorTo(row + 2, col + 3);
+        screen += cellColor;
         screen += FULL_CELL;
+      } else {
+        screen += colors.reset;
       }
     }
   }

@@ -4,8 +4,8 @@ const freezeBlock = (
   block: Tetrominoe,
   blockColumn: number,
   blockRow: number,
-  columns: number[][],
-): number[][] => {
+  columns: FrozenTetrominoe[][],
+): FrozenTetrominoe[][] => {
   const size = Math.sqrt(block.layout.length);
 
   iterateColumns(size, (columnOffset, rowOffset) => {
@@ -13,7 +13,7 @@ const freezeBlock = (
       const adjustedColumn = blockColumn + columnOffset;
       const adjustedRow = blockRow + rowOffset;
 
-      columns[adjustedColumn][adjustedRow] = 1;
+      columns[adjustedColumn][adjustedRow] = {value: 1, color: block.color};
     }
   });
 

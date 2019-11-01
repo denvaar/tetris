@@ -1,6 +1,6 @@
 import findCompleteRows from './findCompleteRows';
 
-const shiftRows = (columns: number[][]): number[][] => {
+const shiftRows = (columns: FrozenTetrominoe[][]): FrozenTetrominoe[][] => {
   const completeRows = findCompleteRows(columns);
 
   if (completeRows.length > 0) {
@@ -8,7 +8,7 @@ const shiftRows = (columns: number[][]): number[][] => {
       Math.abs(completeRows[0] - completeRows[completeRows.length - 1]) + 1;
     return columns.map(column => {
       const newColumn = [
-        ...[...Array(diff)].map(i => 0),
+        ...[...Array(diff)].map(i => ({value: 0, color: null})),
         ...column.slice(0, completeRows[0]),
         ...column.slice(
           completeRows[completeRows.length - 1] + 1,
