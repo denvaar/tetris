@@ -14,9 +14,9 @@ const tetris = (): void => {
   process.stdout.write('\x1b[s');
 
   let lastPressed = '';
-  const columns: FrozenTetrominoe[][] = new Array(10)
-    .fill(undefined)
-    .map(() => new Array(24).fill({value: 0, color: null}));
+  const columns: FrozenTetrominoe[][] = Array.from({length: 10}, () =>
+    Array.from({length: 24}, () => ({value: 0, color: null})),
+  );
 
   const initialState: GameState = {
     block: tetrominoes[2],
