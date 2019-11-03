@@ -8,8 +8,6 @@ import wallKick from './wallKick';
 import getNextBlock from './getNextBlock';
 
 const maxColumn = 9;
-const maxRow = 22;
-const minColumn = 0;
 
 const update = (
   state: GameState,

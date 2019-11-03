@@ -26,7 +26,7 @@ describe('update', () => {
       downPressCount: 0,
       pendingFreezeTTL: 0,
       pendingFreeze: false,
-      prevScreenData: null,
+      prevScreen: null,
       block,
       blockColumn: 0,
       blockRow: 0,
