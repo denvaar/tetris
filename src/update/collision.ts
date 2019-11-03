@@ -26,7 +26,7 @@ const checkCollision = (
     return (
       column >= columns.length ||
       column < 0 ||
-      row >= columns[0].length - 1 ||
+      row > columns[0].length - 1 ||
       columns[column][row].value === 1
     );
   });

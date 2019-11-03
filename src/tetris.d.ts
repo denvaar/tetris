@@ -8,14 +8,19 @@ interface FrozenTetrominoe {
   value: number;
 }
 
-type ScreenData = {
-  [key: string]: string;
+interface ScreenInfoValue {
+  color: null | string;
+  value: string;
+}
+
+type ScreenInfo = {
+  [key: string]: ScreenInfoValue;
 };
 
 type Level = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 interface GameState {
-  prevScreenData: null | ScreenData; // TBD
+  prevScreen: null | ScreenInfo; // Object representing each cell in the last rendered screen
   block: Tetrominoe; // Object representing the falling block
   blockColumn: number; // Column of the falling block
   blockRow: number; // Row of the falling block

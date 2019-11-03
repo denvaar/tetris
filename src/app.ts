@@ -1,4 +1,4 @@
-import drawScreen from './drawScreen';
+import render from './rendering';
 import rotate from './rotation';
 import tetrominoes from './tetrominoes';
 import update from './update';
@@ -27,7 +27,7 @@ const tetris = (): void => {
     level: 1,
     pendingFreeze: false,
     pendingFreezeTTL: 0,
-    prevScreenData: null,
+    prevScreen: null,
   };
 
   const hrtimeMs = function() {
@@ -45,8 +45,7 @@ const tetris = (): void => {
   const gameLoop = (state: GameState): void => {
     let nextState = {...state};
     setTimeout(() => {
-      // draw game state
-      drawScreen(nextState);
+      nextState = render(nextState);
       gameLoop(nextState);
     }, tickLengthMs);
 
@@ -64,6 +63,7 @@ const tetris = (): void => {
       }
     }
     timeElapsed += delta;
+    nextState = render(nextState);
     // update game state
     nextState = update(nextState, lastPressed, () => {
       lastPressed = '';
