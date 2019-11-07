@@ -2,6 +2,7 @@ import render from './rendering';
 import rotate from './rotation';
 import tetrominoes from './tetrominoes';
 import update from './update';
+import fillBag from './utils/fillBag';
 
 const readline = require('readline');
 readline.emitKeypressEvents(process.stdin);
@@ -17,9 +18,14 @@ const tetris = (): void => {
   const columns: FrozenTetrominoe[][] = Array.from({length: 10}, () =>
     Array.from({length: 24}, () => ({value: 0, color: null})),
   );
+  const bag = fillBag();
+  const firstBlockIndex = bag.shift();
+  const nextBlocks = bag.splice(0, 3);
 
   const initialState: GameState = {
-    block: tetrominoes[2],
+    nextBlocks,
+    blockBag: bag,
+    block: tetrominoes[firstBlockIndex as number],
     blockColumn: 0,
     blockRow: 0,
     columns,

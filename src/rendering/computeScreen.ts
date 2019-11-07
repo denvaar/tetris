@@ -1,5 +1,8 @@
 import colors from '../utils/colors';
 import checkCollision from '../update/collision';
+import tetrominoes from '../tetrominoes';
+import {iterateColumns} from '../utils';
+import computeNextBlockUI from './computeNextBlockUI';
 
 const FULL_CELL = '█';
 const EMPTY_CELL = ' ';
@@ -13,8 +16,13 @@ const computeScreen = (
   blockColumn: number,
   blockRow: number,
   frozenBlocks: FrozenTetrominoe[][],
+  nextBlocks: number[],
 ): ScreenInfo => {
-  const screen: ScreenInfo = {};
+  const screen = computeNextBlockUI(
+    boardColumnSize + boardOffsetColumns,
+    nextBlocks,
+    {},
+  );
 
   const blockSize = Math.sqrt(block.layout.length);
 
