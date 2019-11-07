@@ -23,6 +23,8 @@ describe('update', () => {
       ]
     };
     const state: GameState = {
+      blockBag: [],
+      nextBlocks: [],
       downPressCount: 0,
       pendingFreezeTTL: 0,
       pendingFreeze: false,

@@ -20,6 +20,8 @@ type ScreenInfo = {
 type Level = 1 | 2 | 3 | 4 | 5 | 6 | 7 | 8 | 9 | 10;
 
 interface GameState {
+  blockBag: number[]; // array of 7 randomly generated block indecies to pull from
+  nextBlocks: number[]; // array of the 3 next block indecies
   prevScreen: null | ScreenInfo; // Object representing each cell in the last rendered screen
   block: Tetrominoe; // Object representing the falling block
   blockColumn: number; // Column of the falling block
