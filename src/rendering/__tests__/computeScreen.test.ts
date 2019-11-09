@@ -17,7 +17,18 @@ describe('computeScreen', () => {
       ]
     };
 
-    const screen = computeScreen(4, 2, 4, 2, block, 0, 0, [[]], [0, 0, 0]);
+    const screen = computeScreen(
+      4,
+      2,
+      4,
+      2,
+      block,
+      0,
+      0,
+      [[]],
+      [0, 0, 0],
+      null,
+    );
     expect(screen).toEqual(
       expect.objectContaining({
         // prettier-ignore

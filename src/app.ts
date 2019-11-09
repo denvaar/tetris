@@ -23,6 +23,8 @@ const tetris = (): void => {
   const nextBlocks = bag.splice(0, 3);
 
   const initialState: GameState = {
+    preventSaveBlock: false,
+    savedBlock: null,
     nextBlocks,
     blockBag: bag,
     block: tetrominoes[firstBlockIndex as number],
@@ -81,7 +83,7 @@ const tetris = (): void => {
   process.stdin.on('keypress', (str, {ctrl, name}) => {
     if (ctrl && name === 'c') process.exit();
 
-    const acceptableKeys = ['r', 'l', 'h', 'j', 'space'];
+    const acceptableKeys = ['r', 'l', 'h', 'j', 'space', 's'];
     if (acceptableKeys.includes(name)) {
       lastPressed = name;
     }
