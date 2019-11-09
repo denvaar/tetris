@@ -8,6 +8,7 @@ import wallKick from './wallKick';
 import getNextBlock from './getNextBlock';
 import tetrominoes from '../tetrominoes';
 import fillBag from '../utils/fillBag';
+import AudioService from '../utils/sounds';
 
 const maxColumn = 9;
 
@@ -132,6 +133,7 @@ const update = (
 
   if (isColliding) {
     if (state.downPressCount === 2) {
+      AudioService.getInstance().playBlockFreezeSound();
       state.columns = freezeBlock(
         state.block,
         state.blockColumn,
@@ -148,6 +150,7 @@ const update = (
 
     if (state.pendingFreeze) {
       if (state.pendingFreezeTTL <= 0) {
+        AudioService.getInstance().playBlockFreezeSound();
         state.columns = freezeBlock(
           state.block,
           state.blockColumn,

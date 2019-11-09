@@ -4,6 +4,7 @@ import findCompleteRows from './findCompleteRows';
 import shiftRows from './shiftRows';
 import tetrominoes from '../tetrominoes';
 import {getRandomInt} from '../utils';
+import AudioService from '../utils/sounds';
 
 const getNextBlock = (state: GameState): GameState => {
   const nextBlockIndex = state.nextBlocks.shift();
@@ -15,6 +16,14 @@ const getNextBlock = (state: GameState): GameState => {
   }
 
   const completeRows = findCompleteRows(state.columns);
+
+  if (completeRows.length > 0) {
+    if (completeRows.length >= 4) {
+      AudioService.getInstance().playTetrisSound();
+    } else {
+      AudioService.getInstance().playRowClearSound();
+    }
+  }
 
   if (state.rowClearCount + completeRows.length >= 10) {
     state.rowClearCount = state.rowClearCount + completeRows.length - 10;

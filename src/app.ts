@@ -4,6 +4,8 @@ import tetrominoes from './tetrominoes';
 import update from './update';
 import fillBag from './utils/fillBag';
 
+import SoundService from './utils/sounds';
+
 const readline = require('readline');
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.setRawMode) {
@@ -13,6 +15,8 @@ if (process.stdin.setRawMode) {
 const tetris = (): void => {
   // save cursor
   process.stdout.write('\x1b[s');
+
+  let music = SoundService.getInstance().playBackgroundMusic();
 
   let lastPressed = '';
   const columns: FrozenTetrominoe[][] = Array.from({length: 10}, () =>
@@ -53,6 +57,9 @@ const tetris = (): void => {
   let timeElapsed = 0;
 
   const gameLoop = (state: GameState): void => {
+    if ((music as any).exitCode === 0) {
+      music = SoundService.getInstance().playBackgroundMusic();
+    }
     let nextState = {...state};
     setTimeout(() => {
       nextState = render(nextState);
@@ -96,6 +103,7 @@ const tetris = (): void => {
     process.stdout.write('\x1b[?25h');
     // restore cursor
     process.stdout.write('\x1b[u');
+    music.kill();
   });
 
   process.stdout.write('\x1b[2J');
