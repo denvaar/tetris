@@ -23,6 +23,7 @@ const tetris = (): void => {
   const nextBlocks = bag.splice(0, 3);
 
   const initialState: GameState = {
+    rowClearCount: 0,
     score: 0,
     preventSaveBlock: false,
     savedBlock: null,
@@ -61,7 +62,7 @@ const tetris = (): void => {
     const now = hrtimeMs();
     const delta = (now - previous) / 1000;
 
-    if (timeElapsed >= 1 - state.level * 0.1) {
+    if (timeElapsed >= 1 - state.level * 0.15) {
       timeElapsed = 0;
       if (!nextState.pendingFreeze) {
         nextState.blockRow++;

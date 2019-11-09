@@ -34,4 +34,5 @@ interface GameState {
   preventSaveBlock: boolean;
   savedBlock: Tetrominoe | null;
   score: number;
+  rowClearCount: number; // resets at 10
 }
