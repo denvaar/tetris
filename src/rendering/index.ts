@@ -19,6 +19,7 @@ const render = (state: GameState): GameState => {
     state.columns,
     state.nextBlocks,
     state.savedBlock,
+    state.score,
   );
 
   const diff = compareScreen(state.prevScreen, screen);

@@ -19,6 +19,7 @@ const computeScreen = (
   frozenBlocks: FrozenTetrominoe[][],
   nextBlocks: number[],
   savedBlock: Tetrominoe | null,
+  score: number,
 ): ScreenInfo => {
   let screen = computeNextBlockUI(
     boardColumnSize + boardOffsetColumns,
@@ -27,6 +28,11 @@ const computeScreen = (
   );
 
   screen = computeSaveBlockUI(0, savedBlock, screen);
+
+  screen[String([21, 20])] = {
+    color: colors.white,
+    value: `Score ${score}`, // Note: could be problematic to add more than one character, but this seems to work.
+  };
 
   const blockSize = Math.sqrt(block.layout.length);
 

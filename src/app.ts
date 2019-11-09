@@ -23,6 +23,7 @@ const tetris = (): void => {
   const nextBlocks = bag.splice(0, 3);
 
   const initialState: GameState = {
+    score: 0,
     preventSaveBlock: false,
     savedBlock: null,
     nextBlocks,
