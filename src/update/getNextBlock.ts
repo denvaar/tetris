@@ -16,6 +16,13 @@ const getNextBlock = (state: GameState): GameState => {
 
   const completeRows = findCompleteRows(state.columns);
 
+  if (state.rowClearCount + completeRows.length >= 10) {
+    state.rowClearCount = state.rowClearCount + completeRows.length - 10;
+    state.level++;
+  } else {
+    state.rowClearCount += completeRows.length;
+  }
+
   state.score += calculatePoints(completeRows.length, state.level);
   state.block = tetrominoes[nextBlockIndex as number];
   state.columns = shiftRows(state.columns, completeRows);

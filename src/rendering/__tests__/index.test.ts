@@ -43,6 +43,7 @@ describe('render', () => {
       '2,7': {color: 'blue', value: ' '},
     };
     const state: GameState = {
+      rowClearCount: 0,
       score: 0,
       preventSaveBlock: false,
       savedBlock: null,
@@ -85,6 +86,7 @@ describe('render', () => {
       state.nextBlocks,
       state.savedBlock,
       state.score,
+      state.level,
     );
     expect(compareScreenSpy).toHaveBeenCalledWith(prevScreen, currentScreen);
     expect(writeScreenSpy).toHaveBeenCalledWith(expectedScreenDiff);

@@ -23,6 +23,7 @@ describe('update', () => {
       ]
     };
     const state: GameState = {
+      rowClearCount: 0,
       score: 0,
       preventSaveBlock: false,
       savedBlock: null,

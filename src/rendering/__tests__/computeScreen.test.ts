@@ -29,6 +29,7 @@ describe('computeScreen', () => {
       [0, 0, 0],
       null,
       0,
+      0,
     );
     expect(screen).toEqual(
       expect.objectContaining({
