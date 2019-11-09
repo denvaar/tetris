@@ -23,6 +23,8 @@ describe('update', () => {
       ]
     };
     const state: GameState = {
+      preventSaveBlock: false,
+      savedBlock: null,
       blockBag: [],
       nextBlocks: [],
       downPressCount: 0,

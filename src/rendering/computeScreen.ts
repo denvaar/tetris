@@ -3,6 +3,7 @@ import checkCollision from '../update/collision';
 import tetrominoes from '../tetrominoes';
 import {iterateColumns} from '../utils';
 import computeNextBlockUI from './computeNextBlockUI';
+import computeSaveBlockUI from './computeSaveBlockUI';
 
 const FULL_CELL = '█';
 const EMPTY_CELL = ' ';
@@ -17,12 +18,15 @@ const computeScreen = (
   blockRow: number,
   frozenBlocks: FrozenTetrominoe[][],
   nextBlocks: number[],
+  savedBlock: Tetrominoe | null,
 ): ScreenInfo => {
-  const screen = computeNextBlockUI(
+  let screen = computeNextBlockUI(
     boardColumnSize + boardOffsetColumns,
     nextBlocks,
     {},
   );
+
+  screen = computeSaveBlockUI(0, savedBlock, screen);
 
   const blockSize = Math.sqrt(block.layout.length);
 

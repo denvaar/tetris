@@ -16,6 +16,21 @@ const update = (
 ): GameState => {
   const {blockColumn, blockRow} = state;
 
+  /* save block */
+  if (lastPressed === 's' && !state.preventSaveBlock) {
+    if (state.savedBlock === null) {
+      // get next block from upcoming blocks
+      state.savedBlock = state.block;
+    } else {
+      // swap previously saved block current block
+      const temp = state.savedBlock;
+      state.savedBlock = state.block;
+      state.block = temp;
+    }
+
+    state.preventSaveBlock = true;
+  }
+
   /* fast drop */
   if (lastPressed === 'space') {
     let row = blockRow;

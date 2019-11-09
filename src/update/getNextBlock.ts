@@ -18,6 +18,7 @@ const getNextBlock = (state: GameState): GameState => {
   state.blockColumn = 0;
   state.pendingFreeze = false;
   state.pendingFreezeTTL = 0;
+  state.preventSaveBlock = false;
 
   return state;
 };

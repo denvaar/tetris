@@ -4,7 +4,7 @@ import writeScreen from './writeScreen';
 
 const render = (state: GameState): GameState => {
   const boardColumnSize = 12;
-  const boardOffsetColumns = 6;
+  const boardOffsetColumns = 7;
   const boardRowSize = 25;
   const boardOffsetRows = 2;
 
@@ -18,6 +18,7 @@ const render = (state: GameState): GameState => {
     state.blockRow,
     state.columns,
     state.nextBlocks,
+    state.savedBlock,
   );
 
   const diff = compareScreen(state.prevScreen, screen);
