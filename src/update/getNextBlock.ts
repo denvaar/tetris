@@ -5,8 +5,6 @@ import shiftRows from './shiftRows';
 import tetrominoes from '../tetrominoes';
 import {getRandomInt} from '../utils';
 
-import logger from '../utils/logger';
-
 const getNextBlock = (state: GameState): GameState => {
   const nextBlockIndex = state.nextBlocks.shift();
   const queuedBlockIndex = state.blockBag.shift();
@@ -26,8 +24,6 @@ const getNextBlock = (state: GameState): GameState => {
   state.pendingFreeze = false;
   state.pendingFreezeTTL = 0;
   state.preventSaveBlock = false;
-
-  logger.log(state.score);
 
   return state;
 };

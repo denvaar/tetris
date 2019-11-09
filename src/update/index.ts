@@ -6,6 +6,7 @@ import freezeBlock from './freezeBlock';
 import rotate from '../rotation';
 import wallKick from './wallKick';
 import getNextBlock from './getNextBlock';
+import tetrominoes from '../tetrominoes';
 
 const maxColumn = 9;
 
@@ -21,6 +22,13 @@ const update = (
     if (state.savedBlock === null) {
       // get next block from upcoming blocks
       state.savedBlock = state.block;
+      const nextBlockIndex = state.nextBlocks.shift();
+      const queuedBlockIndex = state.blockBag.shift();
+      state.nextBlocks.push(queuedBlockIndex as number);
+      if (state.blockBag.length === 0) {
+        state.blockBag = fillBag();
+      }
+      state.block = tetrominoes[nextBlockIndex as number];
     } else {
       // swap previously saved block current block
       const temp = state.savedBlock;
