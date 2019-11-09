@@ -1,8 +1,7 @@
-import findCompleteRows from './findCompleteRows';
-
-const shiftRows = (columns: FrozenTetrominoe[][]): FrozenTetrominoe[][] => {
-  const completeRows = findCompleteRows(columns);
-
+const shiftRows = (
+  columns: FrozenTetrominoe[][],
+  completeRows: number[],
+): FrozenTetrominoe[][] => {
   if (completeRows.length > 0) {
     const diff =
       Math.abs(completeRows[0] - completeRows[completeRows.length - 1]) + 1;

@@ -23,6 +23,7 @@ describe('update', () => {
       ]
     };
     const state: GameState = {
+      score: 0,
       preventSaveBlock: false,
       savedBlock: null,
       blockBag: [],

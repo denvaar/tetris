@@ -1,8 +1,5 @@
-import * as findCompleteRows from '../findCompleteRows';
 import shiftRows from '../shiftRows';
 import {makeColumns} from '../../utils/testHelpers';
-
-const findCompleteRowsSpy = jest.spyOn(findCompleteRows, 'default');
 
 describe('shiftRows', () => {
   test('single completed row', () => {
@@ -22,10 +19,7 @@ describe('shiftRows', () => {
       [0, 0, 0, 1],
     ]);
 
-    findCompleteRowsSpy.mockImplementation(() => [1]);
-
-    expect(shiftRows(columns)).toEqual(expected);
-    expect(findCompleteRowsSpy).toHaveBeenCalledWith(columns);
+    expect(shiftRows(columns, [1])).toEqual(expected);
   });
 
   test('several completed row', () => {
@@ -45,10 +39,7 @@ describe('shiftRows', () => {
       [0, 0, 0, 0],
     ]);
 
-    findCompleteRowsSpy.mockImplementation(() => [1, 2, 3]);
-
-    expect(shiftRows(columns)).toEqual(expected);
-    expect(findCompleteRowsSpy).toHaveBeenCalledWith(columns);
+    expect(shiftRows(columns, [1, 2, 3])).toEqual(expected);
   });
 
   test('no completed row', () => {
@@ -68,9 +59,6 @@ describe('shiftRows', () => {
       [0, 1, 1, 0],
     ]);
 
-    findCompleteRowsSpy.mockImplementation(() => []);
-
-    expect(shiftRows(columns)).toEqual(expected);
-    expect(findCompleteRowsSpy).toHaveBeenCalledWith(columns);
+    expect(shiftRows(columns, [])).toEqual(expected);
   });
 });

@@ -1,7 +1,11 @@
+import calculatePoints from './calculatePoints';
+import fillBag from '../utils/fillBag';
+import findCompleteRows from './findCompleteRows';
 import shiftRows from './shiftRows';
 import tetrominoes from '../tetrominoes';
 import {getRandomInt} from '../utils';
-import fillBag from '../utils/fillBag';
+
+import logger from '../utils/logger';
 
 const getNextBlock = (state: GameState): GameState => {
   const nextBlockIndex = state.nextBlocks.shift();
@@ -12,13 +16,18 @@ const getNextBlock = (state: GameState): GameState => {
     state.blockBag = fillBag();
   }
 
+  const completeRows = findCompleteRows(state.columns);
+
+  state.score += calculatePoints(completeRows.length, state.level);
   state.block = tetrominoes[nextBlockIndex as number];
-  state.columns = shiftRows(state.columns);
+  state.columns = shiftRows(state.columns, completeRows);
   state.blockRow = 0;
   state.blockColumn = 0;
   state.pendingFreeze = false;
   state.pendingFreezeTTL = 0;
   state.preventSaveBlock = false;
+
+  logger.log(state.score);
 
   return state;
 };
