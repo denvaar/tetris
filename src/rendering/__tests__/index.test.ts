@@ -43,6 +43,7 @@ describe('render', () => {
       '2,7': {color: 'blue', value: ' '},
     };
     const state: GameState = {
+      gameOver: false,
       rowClearCount: 0,
       score: 0,
       preventSaveBlock: false,

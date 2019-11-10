@@ -35,11 +35,16 @@ const getNextBlock = (state: GameState): GameState => {
   state.score += calculatePoints(completeRows.length, state.level);
   state.block = tetrominoes[nextBlockIndex as number];
   state.columns = shiftRows(state.columns, completeRows);
-  state.blockRow = 0;
-  state.blockColumn = 0;
+  state.blockRow = -3;
+  state.blockColumn = 3;
   state.pendingFreeze = false;
   state.pendingFreezeTTL = 0;
   state.preventSaveBlock = false;
+
+  if (state.columns.some(col => col[0].value === 1)) {
+    state.gameOver = true;
+    process.exit(`Game Over\nScore: ${state.score}\n` as any);
+  }
 
   return state;
 };
