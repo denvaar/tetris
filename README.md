@@ -6,11 +6,25 @@
 
 ## Install & Setup
 
-Development Setup:
+Install with yarn or npm.
 ```
-yarn dev
-node .
+$ yarn
+$ yarn dev
+$ node .
 ```
+
+(Optional) Make it a global package.
+```
+$ yarn global add file:path/to/project
+$ tetris
+```
+
+### Recommended Font
+
+Though you're probably using a monospace font in your terminal already, the cells are still probably taller than they are wide. This causes the game to look vertically stretched out. It's recommended to use one of the following fonts for the game for best quality.
+
+1. [Pet Me 64](https://www.kreativekorp.com/software/fonts/c64.shtml) (Most recommended)
+2. GB18030 Bitmap (Pretty good, and your machine probably has it already)
 
 ## Gameplay & Development Features
 
