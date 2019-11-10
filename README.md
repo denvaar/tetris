@@ -1,8 +1,32 @@
 ## Tetris
 
-For the terminal
+#### For the terminal.
 
 ![image](https://user-images.githubusercontent.com/10538978/68551558-68d11a00-03cb-11ea-9dc8-9c73750cd2f5.png)
+<img src="https://user-images.githubusercontent.com/10538978/68551558-68d11a00-03cb-11ea-9dc8-9c73750cd2f5.png" width="250">
+
+## Install & Setup
+
+Development Setup:
+```
+yarn dev
+node .
+```
+
+## Gameplay & Development Features
+
+- Move blocks left, right, and downward
+- Rotate blocks
+- Hard drop
+- Preview next 3 blocks
+- Save one block at a time for later
+- Pause and resume game state
+- Configurable controls and settings
+- Wall kick
+- Pretty colors
+- Sound effects & music
+- Some tests :)
+- Efficient UI rendering
 
 
 ## Attribution
