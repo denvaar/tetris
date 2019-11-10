@@ -44,7 +44,31 @@ const update = (
       // swap previously saved block current block
       const temp = state.savedBlock;
       state.savedBlock = state.block;
-      state.block = temp;
+
+      if (
+        !checkCollision(blockColumn, blockRow, state.columns, temp) &&
+        !checkCollisionRight(blockColumn, blockRow, state.columns, temp) &&
+        !checkCollisionLeft(blockColumn, blockRow, state.columns, temp)
+      ) {
+        state.block = temp;
+      } else {
+        const [wallKickColumn, wallKickRow] = wallKick(
+          blockColumn,
+          blockRow,
+          state.columns,
+          temp,
+          maxColumn,
+        );
+
+        if (wallKickColumn !== 0) {
+          state.block = temp;
+          state.blockColumn = state.blockColumn + wallKickColumn;
+          state.blockRow = state.blockRow - wallKickRow;
+        }
+
+        clearLastPressed();
+        return state;
+      }
     }
 
     state.preventSaveBlock = true;
