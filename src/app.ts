@@ -27,6 +27,7 @@ const tetris = (): void => {
   const nextBlocks = bag.splice(0, 3);
 
   const initialState: GameState = {
+    gameOver: false,
     rowClearCount: 0,
     score: 0,
     preventSaveBlock: false,
@@ -34,8 +35,8 @@ const tetris = (): void => {
     nextBlocks,
     blockBag: bag,
     block: tetrominoes[firstBlockIndex as number],
-    blockColumn: 0,
-    blockRow: 0,
+    blockColumn: 3,
+    blockRow: -1,
     columns,
     downPressCount: 0,
     level: 1,
@@ -98,12 +99,15 @@ const tetris = (): void => {
     }
   });
 
-  process.on('exit', () => {
-    process.stdout.write('\x1b[2J');
+  process.on('exit', iKnowYourNotSupposedToUseThisLikeThis => {
+    // process.stdout.write('\x1b[2J');
     process.stdout.write('\x1b[?25h');
     // restore cursor
     process.stdout.write('\x1b[u');
     music.kill();
+    if (typeof iKnowYourNotSupposedToUseThisLikeThis === 'string') {
+      console.log(iKnowYourNotSupposedToUseThisLikeThis);
+    }
   });
 
   process.stdout.write('\x1b[2J');

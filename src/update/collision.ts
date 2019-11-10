@@ -53,7 +53,7 @@ export const checkCollisionRight = (
   });
 
   return Object.keys(maxPosition).some(r => {
-    const row = Number(r);
+    const row = Number(r) < 0 ? 0 : Number(r);
     const column = maxPosition[r];
     return (
       column < 0 || column >= columns.length || columns[column][row].value === 1
@@ -82,7 +82,7 @@ export const checkCollisionLeft = (
   });
 
   return Object.keys(minPosition).some(r => {
-    const row = Number(r);
+    const row = Number(r) < 0 ? 0 : Number(r);
     const column = minPosition[r];
     return (
       column >= columns.length || column < 0 || columns[column][row].value === 1
