@@ -3,6 +3,7 @@ import rotate from './rotation';
 import tetrominoes from './tetrominoes';
 import update from './update';
 import fillBag from './utils/fillBag';
+import checkCollision from './update/collision';
 
 import SoundService from './utils/sounds';
 import {ChildProcess} from 'child_process';
@@ -95,8 +96,18 @@ const tetris = (config: GameConfig): void => {
 
     if (timeElapsed >= 1 - state.level * 0.15) {
       timeElapsed = 0;
+
       if (!nextState.pendingFreeze) {
-        nextState.blockRow++;
+        if (
+          !checkCollision(
+            state.blockColumn,
+            state.blockRow + 1,
+            state.columns,
+            state.block,
+          )
+        ) {
+          nextState.blockRow++;
+        }
       }
 
       if (nextState.pendingFreeze && nextState.pendingFreezeTTL > 0) {
