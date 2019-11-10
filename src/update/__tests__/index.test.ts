@@ -47,11 +47,25 @@ describe('update', () => {
         [0, 0, 0, 0, 0]]),
       level: 1,
     };
+
+    const config = {
+      controls: {
+        left: 'h',
+        right: 'l',
+        down: 'j',
+        hardDrop: 'space',
+        rotate: 'r',
+        saveBlock: 's',
+      },
+      musicEnabled: false,
+      soundEffectsEnabled: true,
+      pauseDataFile: '/tmp/tetris',
+    };
     const lastPressed = 'r';
     const rotateSpy = jest
       .spyOn(rotate, 'default')
       .mockImplementation(() => rotatedBlock.layout);
-    const nextState: GameState = update(state, lastPressed, () => {});
+    const nextState: GameState = update(state, config, lastPressed, () => {});
     expect(nextState.block).toEqual(rotatedBlock);
     expect(rotateSpy).toHaveBeenCalledWith(block.layout);
   });

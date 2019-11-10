@@ -6,7 +6,7 @@ import tetrominoes from '../tetrominoes';
 import {getRandomInt} from '../utils';
 import AudioService from '../utils/sounds';
 
-const getNextBlock = (state: GameState): GameState => {
+const getNextBlock = (state: GameState, config: GameConfig): GameState => {
   const nextBlockIndex = state.nextBlocks.shift();
   const queuedBlockIndex = state.blockBag.shift();
   state.nextBlocks.push(queuedBlockIndex as number);
@@ -17,7 +17,7 @@ const getNextBlock = (state: GameState): GameState => {
 
   const completeRows = findCompleteRows(state.columns);
 
-  if (completeRows.length > 0) {
+  if (config.soundEffectsEnabled === true && completeRows.length > 0) {
     if (completeRows.length >= 4) {
       AudioService.getInstance().playTetrisSound();
     } else {

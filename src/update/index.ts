@@ -14,13 +14,22 @@ const maxColumn = 9;
 
 const update = (
   state: GameState,
+  config: any,
   lastPressed: string,
   clearLastPressed: () => void,
 ): GameState => {
   const {blockColumn, blockRow} = state;
 
+  /* pause game */
+  if (lastPressed === 'p') {
+    const fs = require('fs');
+    state.prevScreen = null;
+    fs.writeFileSync('/tmp/tetris', JSON.stringify(state));
+    process.exit(0);
+  }
+
   /* save block */
-  if (lastPressed === 's' && !state.preventSaveBlock) {
+  if (lastPressed === config.controls.saveBlock && !state.preventSaveBlock) {
     if (state.savedBlock === null) {
       // get next block from upcoming blocks
       state.savedBlock = state.block;
@@ -42,7 +51,7 @@ const update = (
   }
 
   /* fast drop */
-  if (lastPressed === 'space') {
+  if (lastPressed === config.controls.hardDrop) {
     let row = blockRow;
     while (!checkCollision(blockColumn, row + 1, state.columns, state.block)) {
       row++;
@@ -52,7 +61,7 @@ const update = (
   }
 
   /* rotate */
-  if (lastPressed === 'r') {
+  if (lastPressed === config.controls.rotate) {
     const rotatedBlock = {
       ...state.block,
       layout: rotate([...state.block.layout]),
@@ -89,7 +98,7 @@ const update = (
   }
 
   /* move right */
-  if (lastPressed === 'l') {
+  if (lastPressed === config.controls.right) {
     if (
       !checkCollisionRight(
         blockColumn + 1,
@@ -103,7 +112,7 @@ const update = (
   }
 
   /* move left */
-  if (lastPressed === 'h') {
+  if (lastPressed === config.controls.left) {
     if (
       !checkCollisionLeft(blockColumn - 1, blockRow, state.columns, state.block)
     ) {
@@ -119,13 +128,13 @@ const update = (
   );
 
   /* move down */
-  if (lastPressed === 'j' && !state.pendingFreeze) {
+  if (lastPressed === config.controls.down && !state.pendingFreeze) {
     if (!isColliding) {
       state.blockRow += 1;
     }
   }
 
-  if (lastPressed === 'j' && state.pendingFreeze) {
+  if (lastPressed === config.controls.down && state.pendingFreeze) {
     if (isColliding) {
       state.downPressCount++;
     }
@@ -133,7 +142,9 @@ const update = (
 
   if (isColliding) {
     if (state.downPressCount === 2) {
-      AudioService.getInstance().playBlockFreezeSound();
+      if (config.soundEffectsEnabled === true) {
+        AudioService.getInstance().playBlockFreezeSound();
+      }
       state.columns = freezeBlock(
         state.block,
         state.blockColumn,
@@ -141,7 +152,7 @@ const update = (
         state.columns,
       );
 
-      state = getNextBlock(state);
+      state = getNextBlock(state, config);
       state.downPressCount = 0;
       clearLastPressed();
 
@@ -150,7 +161,9 @@ const update = (
 
     if (state.pendingFreeze) {
       if (state.pendingFreezeTTL <= 0) {
-        AudioService.getInstance().playBlockFreezeSound();
+        if (config.soundEffectsEnabled === true) {
+          AudioService.getInstance().playBlockFreezeSound();
+        }
         state.columns = freezeBlock(
           state.block,
           state.blockColumn,
@@ -158,7 +171,7 @@ const update = (
           state.columns,
         );
 
-        state = getNextBlock(state);
+        state = getNextBlock(state, config);
       }
     } else {
       state.pendingFreeze = true;

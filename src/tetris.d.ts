@@ -37,3 +37,17 @@ interface GameState {
   score: number;
   rowClearCount: number; // resets at 10
 }
+
+interface GameConfig {
+  controls: {
+    left: string;
+    right: string;
+    down: string;
+    hardDrop: string;
+    rotate: string;
+    saveBlock: string;
+  };
+  musicEnabled: boolean;
+  soundEffectsEnabled: boolean;
+  pauseDataFile: string;
+}
