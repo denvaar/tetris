@@ -5,8 +5,12 @@ import * as writeScreen from '../writeScreen';
 
 describe('render', () => {
   it('computes, compares, and writes ascii text to the screen', () => {
+    const color: Color = {
+      bright: '',
+      normal: '',
+    };
     const block: Tetrominoe = {
-      color: '',
+      color,
       // prettier-ignore
       layout: [
         1, 1, 1,
@@ -15,7 +19,7 @@ describe('render', () => {
       ]
     };
     const rotatedBlock: Tetrominoe = {
-      color: '',
+      color,
       // prettier-ignore
       layout: [
         0, 0, 1,

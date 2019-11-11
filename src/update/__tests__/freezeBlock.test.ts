@@ -2,8 +2,12 @@ import freezeBlock from '../freezeBlock';
 
 describe('freezeBlock', () => {
   it('freezes a block at the first available coordinates', () => {
+    const color: Color = {
+      normal: '',
+      bright: '',
+    };
     const block: Tetrominoe = {
-      color: '',
+      color,
       // prettier-ignore
       layout: [
         0, 0, 0,
@@ -23,9 +27,9 @@ describe('freezeBlock', () => {
 
     const result = freezeBlock(block, blockColumn, blockRow, columns);
 
-    expect(result[0][result[0].length - 1]).toEqual({value: 1, color: ''});
-    expect(result[1][result[0].length - 1]).toEqual({value: 1, color: ''});
-    expect(result[1][result[0].length - 2]).toEqual({value: 1, color: ''});
-    expect(result[2][result[0].length - 1]).toEqual({value: 1, color: ''});
+    expect(result[0][result[0].length - 1]).toEqual({value: 1, color});
+    expect(result[1][result[0].length - 1]).toEqual({value: 1, color});
+    expect(result[1][result[0].length - 2]).toEqual({value: 1, color});
+    expect(result[2][result[0].length - 1]).toEqual({value: 1, color});
   });
 });

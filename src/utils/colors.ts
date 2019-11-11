@@ -1,17 +1,43 @@
-const colors = {
-  blue: '\x1b[33m',
-  cyan: '\x1b[36m',
-  darkGray: '\x1b[2;37;40m',
-  green: '\x1b[32m',
-  lightGray: '\x1b[90m',
-  lightRed: '\x1b[91m',
-  magenta: '\x1b[35m',
-  red: '\x1b[31m',
-  white: '\x1b[37m',
-  yellow: '\x1b[33m',
+const colors256: ColorInfo = {
+  blue: {
+    bright: '\x1b[38;5;27m',
+    normal: '\x1b[38;5;20m',
+  },
+  cyan: {
+    bright: '\x1b[38;5;159m',
+    normal: '\x1b[38;5;51m',
+  },
+  green: {
+    bright: '\x1b[38;5;41m',
+    normal: '\x1b[38;5;34m',
+  },
+  red: {
+    bright: '\x1b[38;5;1m',
+    normal: '\x1b[38;5;196m',
+  },
+  yellow: {
+    bright: '\x1b[38;5;230m',
+    normal: '\x1b[38;5;220m',
+  },
+  purple: {
+    bright: '\x1b[38;5;141m',
+    normal: '\x1b[38;5;135m',
+  },
+  pink: {
+    bright: '\x1b[38;5;225m',
+    normal: '\x1b[38;5;204m',
+  },
+  gray: {
+    bright: '\x1b[38;5;245m',
+    normal: '\x1b[38;5;238m',
+  },
+  white: {
+    bright: '\x1b[37m',
+    normal: '\x1b[38;5;255m',
+  },
 
   // Special
   reset: '\x1b[0m',
 };
 
-export default colors;
+export default colors256;

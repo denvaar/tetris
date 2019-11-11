@@ -4,8 +4,12 @@ import {makeColumns} from '../../utils/testHelpers';
 
 describe('update', () => {
   test('activePiece is rotated when lastPressed is "r"', () => {
+    const color: Color = {
+      normal: '',
+      bright: '',
+    };
     const block: Tetrominoe = {
-      color: '',
+      color,
       // prettier-ignore
       layout: [
         1, 1, 1,
@@ -14,7 +18,7 @@ describe('update', () => {
       ]
     };
     const rotatedBlock: Tetrominoe = {
-      color: '',
+      color,
       // prettier-ignore
       layout: [
         0, 0, 1,

@@ -199,7 +199,7 @@ const update = (
       }
     } else {
       state.pendingFreeze = true;
-      state.pendingFreezeTTL = 2;
+      state.pendingFreezeTTL = 1.7 * state.level;
     }
   } else {
     if (state.pendingFreeze) {

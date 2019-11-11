@@ -1,16 +1,34 @@
 interface Tetrominoe {
-  color: string;
+  color: Color;
   layout: number[];
 }
 
 interface FrozenTetrominoe {
-  color: string | null;
+  color: Color | null;
   value: number;
 }
 
 interface ScreenInfoValue {
   color: null | string;
   value: string;
+}
+
+interface Color {
+  bright: string;
+  normal: string;
+}
+
+interface ColorInfo {
+  blue: Color;
+  cyan: Color;
+  green: Color;
+  red: Color;
+  yellow: Color;
+  purple: Color;
+  pink: Color;
+  gray: Color;
+  white: Color;
+  reset: string;
 }
 
 type ScreenInfo = {
