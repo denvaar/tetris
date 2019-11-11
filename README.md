@@ -2,7 +2,7 @@
 
 #### For the terminal.
 
-<img src="https://user-images.githubusercontent.com/10538978/68551558-68d11a00-03cb-11ea-9dc8-9c73750cd2f5.png" width="250">
+<img src="https://user-images.githubusercontent.com/10538978/68559606-cd579d80-03fa-11ea-8525-15664740debd.png" width="250">
 
 ## Install & Setup
 
