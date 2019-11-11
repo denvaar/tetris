@@ -41,7 +41,7 @@ Though you're probably using a monospace font in your terminal already, the cell
 - Pretty colors
 - Sound effects & music
 - Some tests :)
-
+- Interesting (maybe clever?) UI rendering system
 
 ## Attribution
 
