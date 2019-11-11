@@ -35,11 +35,12 @@ Though you're probably using a monospace font in your terminal already, the cell
 - Save one block at a time for later
 - Pause and resume game state
 - Configurable controls and settings
+- High scores (Coming soon)
+- Animations (Coming soon)
 - Wall kick
 - Pretty colors
 - Sound effects & music
 - Some tests :)
-- Efficient UI rendering
 
 
 ## Attribution
