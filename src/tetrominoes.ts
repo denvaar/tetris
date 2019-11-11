@@ -16,21 +16,21 @@ const tetrominoes: Array<Tetrominoe> = [
              1, 1]
   },
   {
-    color: colors.magenta,
+    color: colors.purple,
     // prettier-ignore
     layout: [0, 0, 0,
              0, 1, 0,
              1, 1, 1]
   },
   {
-    color: colors.blue,
+    color: colors.pink,
     // prettier-ignore
     layout: [0, 0, 0,
              1, 0, 0,
              1, 1, 1]
   },
   {
-    color: colors.lightRed,
+    color: colors.blue,
     // prettier-ignore
     layout: [0, 0, 0,
              0, 0, 1,

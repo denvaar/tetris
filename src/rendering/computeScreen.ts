@@ -31,11 +31,11 @@ const computeScreen = (
   screen = computeSaveBlockUI(0, savedBlock, screen);
 
   screen[String([21, 20])] = {
-    color: colors.white,
+    color: colors.white.bright,
     value: `Score ${score}`, // Note: could be problematic to add more than one character, but this seems to work.
   };
   screen[String([21, 19])] = {
-    color: colors.white,
+    color: colors.white.bright,
     value: `Level ${level}`, // Note: could be problematic to add more than one character, but this seems to work.
   };
 
@@ -49,7 +49,7 @@ const computeScreen = (
       /* walls & floor */
       if (i === 0 || i === boardColumnSize - 1 || j === boardRowSize - 1) {
         screen[String([column, row])] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: FULL_CELL,
         };
       } else {
@@ -88,7 +88,7 @@ const computeScreen = (
 
         if (block.layout[layoutIndex] === 1) {
           screen[String([column + 1, row])] = {
-            color: colors.lightGray,
+            color: colors.gray.normal,
             value: FULL_CELL,
           };
         }
@@ -107,7 +107,7 @@ const computeScreen = (
 
         if (block.layout[layoutIndex] === 1) {
           screen[String([column + 1, row])] = {
-            color: block.color,
+            color: block.color.normal,
             value: FULL_CELL,
           };
         }
@@ -119,12 +119,23 @@ const computeScreen = (
         frozenBlocks[i][j] &&
         frozenBlocks[i][j].value === 1
       ) {
+        const color = frozenBlocks[i][j].color;
         screen[String([column + 1, row])] = {
-          color: frozenBlocks[i][j].color,
+          color: color ? color.normal : null,
           value: FULL_CELL,
         };
       }
     }
+  }
+
+  /* top row */
+  for (let i = 0; i < boardColumnSize; i++) {
+    const column = i + boardOffsetColumns + 1;
+
+    screen[String([column, 0 + boardOffsetRows + 1])] = {
+      color: colors.gray.bright,
+      value: FULL_CELL,
+    };
   }
 
   return screen;

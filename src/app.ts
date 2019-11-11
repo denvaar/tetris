@@ -127,14 +127,14 @@ const tetris = (config: GameConfig): void => {
   process.stdin.on('keypress', (str, {ctrl, name}) => {
     if (ctrl && name === 'c') process.exit();
 
-    const acceptableKeys = ['p', ...Object.values(config.controls)]; //, 'r', 'l', 'h', 'j', 'space', 's'];
+    const acceptableKeys = ['p', ...Object.values(config.controls)];
     if (acceptableKeys.includes(name)) {
       lastPressed = name;
     }
   });
 
   process.on('exit', iKnowYourNotSupposedToUseThisLikeThis => {
-    // process.stdout.write('\x1b[2J');
+    process.stdout.write('\x1b[2J');
     process.stdout.write('\x1b[?25h');
     // restore cursor
     process.stdout.write('\x1b[u');

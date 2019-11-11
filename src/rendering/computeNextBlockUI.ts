@@ -26,7 +26,7 @@ const drawNextNBlock = (
     const layoutIndex = rowOffset * blockSize + colOffset;
     if (nextBlock.layout[layoutIndex] === 1) {
       screen[String([col + colOffset, row + rowOffset])] = {
-        color: nextBlock.color,
+        color: nextBlock.color.normal,
         value: FULL_CELL,
       };
     }
@@ -60,7 +60,7 @@ const computeNextBlockUI = (
 
       if (i === 0 && j === 0) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '╔',
         };
         continue;
@@ -68,7 +68,7 @@ const computeNextBlockUI = (
 
       if (i === 0 && j === rowSize - 1) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '╚',
         };
         continue;
@@ -76,7 +76,7 @@ const computeNextBlockUI = (
 
       if (i === columnSize - 1 && j === rowSize - 1) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '╝',
         };
         continue;
@@ -84,7 +84,7 @@ const computeNextBlockUI = (
 
       if (i === columnSize - 1 && j === 0) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '╗',
         };
         continue;
@@ -92,7 +92,7 @@ const computeNextBlockUI = (
 
       if (j % 5 === 0 && i === 0) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '╠',
         };
         continue;
@@ -100,7 +100,7 @@ const computeNextBlockUI = (
 
       if (j % 5 === 0 && i === columnSize - 1) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '╣',
         };
         continue;
@@ -108,7 +108,7 @@ const computeNextBlockUI = (
 
       if (i === 0 || i === columnSize - 1) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '║',
         };
         continue;
@@ -116,7 +116,7 @@ const computeNextBlockUI = (
 
       if (j % 5 === 0 || j === 0 || j === rowSize - 1) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '═',
         };
         continue;

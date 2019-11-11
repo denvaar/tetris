@@ -25,7 +25,7 @@ const drawSaveBlock = (
     const layoutIndex = rowOffset * blockSize + colOffset;
     if (block.layout[layoutIndex] === 1) {
       screen[String([col + colOffset, row + rowOffset])] = {
-        color: block.color,
+        color: block.color.normal,
         value: FULL_CELL,
       };
     }
@@ -53,7 +53,7 @@ const computeSaveBlockUI = (
 
       if (i === 0 && j === 0) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '╔',
         };
         continue;
@@ -61,7 +61,7 @@ const computeSaveBlockUI = (
 
       if (i === 0 && j === rowSize - 1) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '╚',
         };
         continue;
@@ -69,7 +69,7 @@ const computeSaveBlockUI = (
 
       if (i === columnSize - 1 && j === rowSize - 1) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '╝',
         };
         continue;
@@ -77,7 +77,7 @@ const computeSaveBlockUI = (
 
       if (i === columnSize - 1 && j === 0) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '╗',
         };
         continue;
@@ -85,7 +85,7 @@ const computeSaveBlockUI = (
 
       if (i === 0 || i === columnSize - 1) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '║',
         };
         continue;
@@ -93,7 +93,7 @@ const computeSaveBlockUI = (
 
       if (j === 0 || j === rowSize - 1) {
         screen[`${col},${row}`] = {
-          color: colors.lightGray,
+          color: colors.gray.bright,
           value: '═',
         };
         continue;

@@ -4,11 +4,15 @@ import computeScreen from '../computeScreen';
 describe('computeScreen', () => {
   const FULL_CELL = '█';
   const EMPTY_CELL = ' ';
-  const {lightGray, darkGray} = colors;
+  const {gray} = colors;
+  const color: Color = {
+    bright: '',
+    normal: '',
+  };
 
   it('computes walls and floor of game board', () => {
     const block: Tetrominoe = {
-      color: '',
+      color,
       // prettier-ignore
       layout: [
         0, 0 ,0,
@@ -34,28 +38,16 @@ describe('computeScreen', () => {
     expect(screen).toEqual(
       expect.objectContaining({
         // prettier-ignore
-        '3,3': {color: lightGray, value: FULL_CELL},
-        '4,3': {color: null, value: EMPTY_CELL},
-        '5,3': {color: lightGray, value: FULL_CELL},
-        '6,3': {color: lightGray, value: FULL_CELL},
-
-        // prettier-ignore
-        '3,4': {color: lightGray, value: FULL_CELL},
-        '4,4': {color: lightGray, value: FULL_CELL},
-        '5,4': {color: '', value: FULL_CELL},
-        '6,4': {color: lightGray, value: FULL_CELL},
-
-        // prettier-ignore
-        '3,5': {color: lightGray, value: FULL_CELL},
+        '3,5': {color: gray.bright, value: FULL_CELL},
         '4,5': {color: '', value: FULL_CELL},
         '5,5': {color: '', value: FULL_CELL},
         '6,5': {color: '', value: FULL_CELL},
 
         // prettier-ignore
-        '3,6': {color: lightGray, value: FULL_CELL},
-        '4,6': {color: lightGray, value: FULL_CELL},
-        '5,6': {color: lightGray, value: FULL_CELL},
-        '6,6': {color: lightGray, value: FULL_CELL},
+        '3,6': {color: gray.bright, value: FULL_CELL},
+        '4,6': {color: gray.bright, value: FULL_CELL},
+        '5,6': {color: gray.bright, value: FULL_CELL},
+        '6,6': {color: gray.bright, value: FULL_CELL},
       }),
     );
   });
