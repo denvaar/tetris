@@ -6,6 +6,9 @@ import tetrominoes from '../tetrominoes';
 import {getRandomInt} from '../utils';
 import AudioService from '../utils/sounds';
 
+const fs = require('fs');
+const os = require('os');
+
 const getNextBlock = (state: GameState, config: GameConfig): GameState => {
   const nextBlockIndex = state.nextBlocks.shift();
   const queuedBlockIndex = state.blockBag.shift();
@@ -43,7 +46,26 @@ const getNextBlock = (state: GameState, config: GameConfig): GameState => {
 
   if (state.columns.some(col => col[0].value === 1)) {
     state.gameOver = true;
-    process.exit(`Game Over\nScore: ${state.score}\n` as any);
+
+    const config = (() => {
+      try {
+        return JSON.parse(fs.readFileSync(`${os.homedir()}/.tetris.json`));
+      } catch (err) {
+        return {highScore: 0};
+      }
+    })();
+
+    let gameOverMessage = `Game Over\nScore: ${state.score}\n`;
+
+    if (state.score > config.highScore) {
+      fs.writeFileSync(
+        `${os.homedir()}/.tetris.json`,
+        JSON.stringify({...config, highScore: state.score}),
+      );
+      gameOverMessage += 'New high score!\n';
+    }
+
+    process.exit(gameOverMessage as any);
   }
 
   return state;

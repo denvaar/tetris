@@ -161,6 +161,7 @@ const defaultConfig = {
     rotate: 'r',
     saveBlock: 's',
   },
+  highScore: 0,
   musicEnabled: false,
   soundEffectsEnabled: true,
   pauseDataFile: '/tmp/tetris',
