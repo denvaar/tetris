@@ -35,7 +35,7 @@ const getNextBlock = (state: GameState, config: GameConfig): GameState => {
   state.score += calculatePoints(completeRows.length, state.level);
   state.block = tetrominoes[nextBlockIndex as number];
   state.columns = shiftRows(state.columns, completeRows);
-  state.blockRow = -3;
+  state.blockRow = -1;
   state.blockColumn = 3;
   state.pendingFreeze = false;
   state.pendingFreezeTTL = 0;
