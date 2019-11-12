@@ -76,7 +76,10 @@ export const checkCollisionLeft = (
     if (block.layout[size * rowOffset + columnOffset] === 1) {
       const adjustedColumn = blockColumn + columnOffset;
       const adjustedRow = blockRow + rowOffset;
-      const lastMinColumn = Number(minPosition[adjustedRow]) || Infinity;
+      const lastMinColumn =
+        Number(minPosition[adjustedRow]) === 0
+          ? 0
+          : Number(minPosition[adjustedRow]) || Infinity;
       minPosition[adjustedRow] = Math.min(lastMinColumn, adjustedColumn);
     }
   });
