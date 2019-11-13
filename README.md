@@ -4,6 +4,8 @@
 
 <img src="https://user-images.githubusercontent.com/10538978/68559606-cd579d80-03fa-11ea-8525-15664740debd.png" width="250">
 
+[Video demo](https://denvaar.github.io/projects/tetris.html)
+
 ## Install & Setup
 
 Install with yarn or npm.
