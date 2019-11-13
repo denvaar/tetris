@@ -1,13 +1,11 @@
+import AudioService from '../utils/sounds';
+import ConfigService from '../utils/config';
 import calculatePoints from './calculatePoints';
 import fillBag from '../utils/fillBag';
 import findCompleteRows from './findCompleteRows';
 import shiftRows from './shiftRows';
 import tetrominoes from '../tetrominoes';
 import {getRandomInt} from '../utils';
-import AudioService from '../utils/sounds';
-
-const fs = require('fs');
-const os = require('os');
 
 const getNextBlock = (state: GameState, config: GameConfig): GameState => {
   const nextBlockIndex = state.nextBlocks.shift();
@@ -47,21 +45,12 @@ const getNextBlock = (state: GameState, config: GameConfig): GameState => {
   if (state.columns.some(col => col[0].value === 1)) {
     state.gameOver = true;
 
-    const config = (() => {
-      try {
-        return JSON.parse(fs.readFileSync(`${os.homedir()}/.tetris.json`));
-      } catch (err) {
-        return {highScore: 0};
-      }
-    })();
+    const config = ConfigService.getInstance().getConfig();
 
     let gameOverMessage = `Game Over\nScore: ${state.score}\n`;
 
     if (state.score > config.highScore) {
-      fs.writeFileSync(
-        `${os.homedir()}/.tetris.json`,
-        JSON.stringify({...config, highScore: state.score}),
-      );
+      ConfigService.getInstance().updateHighScore(state.score);
       gameOverMessage += 'New high score!\n';
     }
 

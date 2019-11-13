@@ -1,27 +1,25 @@
+import ConfigService from './utils/config';
+import SoundService from './utils/sounds';
+import checkCollision from './update/collision';
+import fillBag from './utils/fillBag';
 import render from './rendering';
 import rotate from './rotation';
 import tetrominoes from './tetrominoes';
 import update from './update';
-import fillBag from './utils/fillBag';
-import checkCollision from './update/collision';
-
-import SoundService from './utils/sounds';
 import {ChildProcess} from 'child_process';
 
-const os = require('os');
-const fs = require('fs');
 const readline = require('readline');
 readline.emitKeypressEvents(process.stdin);
 if (process.stdin.setRawMode) {
   process.stdin.setRawMode(true);
 }
 
-const tetris = (config: GameConfig): void => {
+const tetris = (): void => {
   // save cursor
   process.stdout.write('\x1b[s');
 
   let music: null | ChildProcess;
-  if (config.musicEnabled === true) {
+  if (ConfigService.getInstance().getConfig().musicEnabled === true) {
     music = SoundService.getInstance().playBackgroundMusic();
   }
 
@@ -53,16 +51,11 @@ const tetris = (config: GameConfig): void => {
       prevScreen: null,
     };
 
-    try {
-      const pausedData = fs.readFileSync(config.pauseDataFile);
-      fs.writeFileSync(config.pauseDataFile, '');
+    const pausedGameState = ConfigService.getInstance().resumePausedGame();
 
-      if (pausedData === '') {
-        return defaultState;
-      }
-
-      return JSON.parse(pausedData);
-    } catch (err) {
+    if (pausedGameState !== null) {
+      return pausedGameState;
+    } else {
       return defaultState;
     }
   })();
@@ -80,7 +73,7 @@ const tetris = (config: GameConfig): void => {
   let timeElapsed = 0;
 
   const gameLoop = (state: GameState): void => {
-    if (config.musicEnabled === true) {
+    if (ConfigService.getInstance().getConfig().musicEnabled === true) {
       if ((music as any).exitCode === 0) {
         music = SoundService.getInstance().playBackgroundMusic();
       }
@@ -117,7 +110,7 @@ const tetris = (config: GameConfig): void => {
     timeElapsed += delta;
     nextState = render(nextState);
     // update game state
-    nextState = update(nextState, config, lastPressed, () => {
+    nextState = update(nextState, lastPressed, () => {
       lastPressed = '';
     });
     previous = now;
@@ -127,7 +120,10 @@ const tetris = (config: GameConfig): void => {
   process.stdin.on('keypress', (str, {ctrl, name}) => {
     if (ctrl && name === 'c') process.exit();
 
-    const acceptableKeys = ['p', ...Object.values(config.controls)];
+    const acceptableKeys = [
+      'p',
+      ...Object.values(ConfigService.getInstance().getConfig().controls),
+    ];
     if (acceptableKeys.includes(name)) {
       lastPressed = name;
     }
@@ -138,7 +134,10 @@ const tetris = (config: GameConfig): void => {
     process.stdout.write('\x1b[?25h');
     // restore cursor
     process.stdout.write('\x1b[u');
-    if (music && config.musicEnabled === true) {
+    if (
+      music &&
+      ConfigService.getInstance().getConfig().musicEnabled === true
+    ) {
       music.kill();
     }
     if (typeof iKnowYourNotSupposedToUseThisLikeThis === 'string') {
@@ -152,30 +151,4 @@ const tetris = (config: GameConfig): void => {
   gameLoop(initialState);
 };
 
-const defaultConfig = {
-  controls: {
-    left: 'h',
-    right: 'l',
-    down: 'j',
-    hardDrop: 'space',
-    rotate: 'r',
-    saveBlock: 's',
-  },
-  highScore: 0,
-  musicEnabled: false,
-  soundEffectsEnabled: true,
-  pauseDataFile: '/tmp/tetris',
-};
-
-const config: GameConfig = (() => {
-  try {
-    return {
-      ...defaultConfig,
-      ...JSON.parse(fs.readFileSync(`${os.homedir()}/.tetris.json`)),
-    };
-  } catch (err) {
-    return defaultConfig;
-  }
-})();
-
-tetris(config);
+tetris();
