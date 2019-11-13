@@ -65,6 +65,7 @@ interface GameConfig {
     rotate: string;
     saveBlock: string;
   };
+  highScore: number;
   musicEnabled: boolean;
   soundEffectsEnabled: boolean;
   pauseDataFile: string;

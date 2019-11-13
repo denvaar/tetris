@@ -1,30 +1,29 @@
+import AudioService from '../utils/sounds';
+import ConfigService from '../utils/config';
 import checkCollision, {
   checkCollisionLeft,
   checkCollisionRight,
 } from './collision';
-import freezeBlock from './freezeBlock';
-import rotate from '../rotation';
-import wallKick from './wallKick';
-import getNextBlock from './getNextBlock';
-import tetrominoes from '../tetrominoes';
 import fillBag from '../utils/fillBag';
-import AudioService from '../utils/sounds';
+import freezeBlock from './freezeBlock';
+import getNextBlock from './getNextBlock';
+import rotate from '../rotation';
+import tetrominoes from '../tetrominoes';
+import wallKick from './wallKick';
 
 const maxColumn = 9;
 
 const update = (
   state: GameState,
-  config: any,
   lastPressed: string,
   clearLastPressed: () => void,
 ): GameState => {
   const {blockColumn, blockRow} = state;
+  const config = ConfigService.getInstance().getConfig();
 
   /* pause game */
   if (lastPressed === 'p') {
-    const fs = require('fs');
-    state.prevScreen = null;
-    fs.writeFileSync('/tmp/tetris', JSON.stringify(state));
+    ConfigService.getInstance().saveState(state);
     process.exit(0);
   }
 
